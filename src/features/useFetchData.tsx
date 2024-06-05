@@ -1,16 +1,11 @@
-import { axiosInstance } from "@/lib/AxiosInstance";
-import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react"
+import  axiosInstance  from "@/lib/AxiosInstance";
 
-export const useFetchData = () => {
+export const useFatchdata = async (resource: string,query?: string) => {
+  const response = await axiosInstance.get(`/${resource}?${query}`);
+  return response.data;
+}
 
- const { isLoading, error, data } = useQuery({
-   queryKey: ["content"],
-   queryFn: async () => {
-     const response = await axiosInstance.get("/manga?limit=8");
-     return response.data;
-   },
- });
-
- return { isLoading, error, data };
- }
+export const useFatchNestedData = async (resource: string,objectProprerty: any) => {
+  const response = await useFatchdata(resource);
+  return response.data.flatmap((item: { entry: any; }) => item.entry)
+}

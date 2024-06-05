@@ -20,10 +20,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 
+import { Separator } from "@/components/ui/separator";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import SearchInput from "@/components/Search";
 
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
@@ -45,7 +57,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 flex h-20 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <header className="sticky top-0 flex md:h-20 h-16 items-center gap-4 bg-[#008DDA] px-4 md:px-6">
         <div className="w-full md:container mx-auto flex justify-between items-center">
           <nav className="hidden md:flex md:items-center md:gap-5 lg:gap-6">
             <Link href="#" className="text-lg font-semibold text-slate-50">
@@ -55,10 +67,8 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-muted-foreground transition-colors hover:text-slate-300 hover:animate-pulse ${
-                  pathname === item.href
-                    ? "text-foreground dark:text-white"
-                    : ""
+                className={`text-[#f9f9f9] transition-colors hover:text-slate-300 hover:animate-pulse text-semibold ${
+                  pathname === item.href ? "text-[#F7EEDD] dark:text-white" : ""
                 }`}
               >
                 {item.label}
@@ -100,16 +110,7 @@ export default function Navbar() {
             </SheetContent>
           </Sheet>
           <div className="flex items-center gap-4">
-            <form className="ml-auto">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground hidden md:block" />
-                <Input
-                  type="search"
-                  placeholder="Search..."
-                  className="pl-8 w-full sm:w-[300px] md:w-[200px] lg:w-[300px] hidden md:block"
-                />
-              </div>
-            </form>
+            <SearchInput />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
